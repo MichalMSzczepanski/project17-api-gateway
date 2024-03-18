@@ -5,7 +5,7 @@
 3 semantics:
   - lorem
 2 config:
-  - lorem
+  - override default security authentication "Using generated security password: a75ab247-5de5-42b0-a4a0-8d3293bf5557"
 1 git:
   - lorem
 

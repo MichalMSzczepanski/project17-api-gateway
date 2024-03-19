@@ -11,6 +11,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @Component
 @Slf4j
@@ -30,7 +31,11 @@ public class InternalAccessFilter implements GatewayFilter, Ordered {
 
     private boolean isInternalRequest(ServerHttpRequest request) {
         var ipAddress = Objects.requireNonNull(request.getRemoteAddress()).getHostString();
-        return ipAddress.equals("localhost") || ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1%0");
+        log.info("internal request from ip: " + ipAddress);
+        var pattern = Pattern.compile("(localhost|\\b(?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}" +
+                "(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)(?::\\d{0,4})?\\b)");
+        var matcher = pattern.matcher(ipAddress);
+        return matcher.matches() || ipAddress.equals("0:0:0:0:0:0:0:1%0");
     }
 
     @Override

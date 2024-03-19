@@ -1,4 +1,3 @@
 services:
   address:
-#      todo: should not be using ports but common network does not work for comms between containers
-    user: "http://user-service:8081"
+    user: "http://user-service:8080"

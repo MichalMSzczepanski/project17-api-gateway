@@ -5,6 +5,8 @@
 3 semantics:
   - lorem
 2 config:
+  7 in prod filter internal requests from 127.*
+  6 route traffic in prod to user-service
   5 dockerize app
   4 temporary routing to user-service in prod
   3 global exception handler

@@ -5,6 +5,8 @@
 3 semantics:
   - lorem
 2 config:
+  5 dockerize app
+  4 temporary routing to user-service in prod
   3 global exception handler
   2 logger
   1 user-service routing for four controllers for prod and local development

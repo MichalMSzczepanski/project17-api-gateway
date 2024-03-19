@@ -15,7 +15,6 @@ public class DebugFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("DEBUGGING LOG: Incoming request - Method: " + exchange.getRequest().getMethod() +
                 ", URI: " + exchange.getRequest().getURI());
-        // Custom filter logic here
         return chain.filter(exchange);
     }
 

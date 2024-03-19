@@ -5,7 +5,11 @@
 3 semantics:
   - lorem
 2 config:
-  - override default security authentication "Using generated security password: a75ab247-5de5-42b0-a4a0-8d3293bf5557"
+  - !!! routing traffic to user-service requires port (security issue)
+  - create jwt factory (creation, disabling, validating)
+  - access user-service for credentials confirmation
+  - create header with user details to pass on with request
+  - override default security authentication Using generated security password a75ab247-5de5-42b0-a4a0-8d3293bf5557
 1 git:
   - lorem
 

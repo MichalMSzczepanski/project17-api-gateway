@@ -27,13 +27,15 @@ public class RoutingConfig {
                 .route(r -> r.path("/user/**")
                         // needs jwt authentication
                         // .filters(f -> f.filter(jwtFilter))
-                        .uri(serviceAddressConfiguration.user)) // Private route
+                        // validate if user isn't requesting someone else's data
+                        // .filters(f -> f.filter(dataOwnerFilter))
+                        .uri(serviceAddressConfiguration.user))
                 .route(r -> r.path("/internal/user/**")
                         .filters(f -> f.filter(internalAccessFilter))
                         .uri(serviceAddressConfiguration.user))
                 .route(r -> r.path("/secret-key/**")
                         .filters(f -> f.filter(internalAccessFilter))
-                        .uri(serviceAddressConfiguration.user)) // Route for /secret-key
+                        .uri(serviceAddressConfiguration.user))
                 .build();
     }
 }

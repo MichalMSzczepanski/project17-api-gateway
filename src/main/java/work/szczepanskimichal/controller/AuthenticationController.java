@@ -14,9 +14,13 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginDto dto) {
+        //call user service with credentials
+        //onSuccess create jwt, return to user
+        //onFailure respond appropriately
+        //else throw adequate exception
         return ResponseEntity.ok("lorem");
     }
 
     //logout
-    //disable jwt
+    //disable jwt > add to blacklist
 }

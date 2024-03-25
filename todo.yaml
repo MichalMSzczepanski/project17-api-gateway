@@ -1,7 +1,7 @@
 5 issues:
   - lorem
 4 logic:
-  - lorem
+  - redis for blacklisted jwts
 3 semantics:
   - lorem
 2 config:

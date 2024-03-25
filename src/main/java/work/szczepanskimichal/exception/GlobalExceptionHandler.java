@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception e) {
         var connectionErrorMessage = "An connection error occurred: " + e.getMessage();
         log.error(connectionErrorMessage);
-        log.error("calling user-service at: " + serviceAddressConfiguration.user);
+//        log.error("calling user-service at: " + serviceAddressConfiguration.user);
         return new ResponseEntity<>(connectionErrorMessage, HttpStatus.BAD_GATEWAY);
     }
 

@@ -6,8 +6,8 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import work.szczepanskimichal.security.filters.PublicAccessFilter;
-import work.szczepanskimichal.security.filters.SecurityFilter;
+import work.szczepanskimichal.filters.PublicAccessFilter;
+import work.szczepanskimichal.filters.SecurityFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class RoutingConfig {
 
     private final ServiceAddressConfiguration serviceAddressConfiguration;
     private final PublicAccessFilter publicAccessFilter;
-    public final SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
 
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {

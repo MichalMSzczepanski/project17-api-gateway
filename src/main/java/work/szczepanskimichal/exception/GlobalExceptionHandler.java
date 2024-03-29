@@ -16,8 +16,6 @@ import java.net.ConnectException;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    private final ServiceAddressConfiguration serviceAddressConfiguration;
-
     @ExceptionHandler(ConnectException.class)
     @ResponseBody
     public ResponseEntity<String> handleException(Exception e) {
@@ -34,6 +32,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<String> handleJwtException(JwtException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingJwtException.class)
+    public ResponseEntity<String> handleMissingJwt(MissingJwtException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(InvalidLoginAttemptException.class)

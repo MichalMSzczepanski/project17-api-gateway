@@ -15,7 +15,7 @@ import work.szczepanskimichal.configuration.ServiceAddressConfiguration;
 
 @SpringBootApplication
 @EnableFeignClients
-@EnableConfigurationProperties(ServiceAddressConfiguration.class)
+@EnableConfigurationProperties({ServiceAddressConfiguration.class})
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {

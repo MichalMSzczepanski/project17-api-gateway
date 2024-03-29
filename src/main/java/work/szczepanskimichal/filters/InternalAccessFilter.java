@@ -20,7 +20,7 @@ public class InternalAccessFilter implements GatewayFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         if (isInternalRequest(exchange.getRequest())) {
-            log.info("attempted internal service accessed. requestId: " + exchange.getRequest().getId() +
+            log.info("internal request: requestId: " + exchange.getRequest().getId() +
                     ". path: " + exchange.getRequest().getURI().getPath());
             return chain.filter(exchange);
         } else {

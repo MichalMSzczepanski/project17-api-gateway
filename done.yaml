@@ -5,6 +5,9 @@
 3 semantics:
   - lorem
 2 config:
+  10 route and filter internal requests
+  9 externalize jwt key
+  8 communicate with user-service for user authentication
   7 in prod filter internal requests from 127.*
   6 route traffic in prod to user-service
   5 dockerize app

@@ -5,6 +5,7 @@
 3 semantics:
   - lorem
 2 config:
+  - extract security to external microservice
   - create jwt factory (creation, disabling, validating)
   - access user-service for credentials confirmation
   - create header with user details to pass on with request

@@ -1,4 +1,4 @@
-package work.szczepanskimichal.security.filters;
+package work.szczepanskimichal.filters;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -9,11 +9,11 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
-public class DebugFilter implements GatewayFilter {
+public class PublicAccessFilter implements GatewayFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("DEBUGGING LOG: Incoming request - Method: " + exchange.getRequest().getMethod() +
+        log.info("public access endpoint accessed. method: " + exchange.getRequest().getMethod() +
                 ", URI: " + exchange.getRequest().getURI());
         return chain.filter(exchange);
     }

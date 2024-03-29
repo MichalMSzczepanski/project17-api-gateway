@@ -23,8 +23,22 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception e) {
         var connectionErrorMessage = "An connection error occurred: " + e.getMessage();
         log.error(connectionErrorMessage);
-//        log.error("calling user-service at: " + serviceAddressConfiguration.user);
         return new ResponseEntity<>(connectionErrorMessage, HttpStatus.BAD_GATEWAY);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<String> handleJwtException(JwtException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidLoginAttemptException.class)
+    public ResponseEntity<String> handleInvalidLoginAttempt(InvalidLoginAttemptException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

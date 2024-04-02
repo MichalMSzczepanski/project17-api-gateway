@@ -13,6 +13,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import work.szczepanskimichal.exception.JwtException;
 import work.szczepanskimichal.exception.MissingJwtException;
+import work.szczepanskimichal.repository.BlacklistedJwtsRepository;
 import work.szczepanskimichal.util.CredentialsUtil;
 
 import java.util.Date;
@@ -24,15 +25,18 @@ import java.util.Optional;
 public class SecurityFilter implements GatewayFilter {
 
     private final CredentialsUtil credentialsUtil;
+    private final BlacklistedJwtsRepository blacklistedJwtsRepository;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         var jwt = extractJwtFromRequest(exchange).orElseThrow(MissingJwtException::new);
-        if (!validateJwt(jwt)) {
+        if (!isJwtValid(jwt)) {
             throw new JwtException("invalid jwt");
         }
-        //check if jwt is blacklisted in redis
-        //add header with userdetails to request for further validation if needed2
+        if (blacklistedJwtsRepository.existsByJwt(jwt)) {
+            throw new JwtException("jwt expired");
+        }
+        //todo add header with userdetails to request for further validation if needed2
         return chain.filter(exchange);
     }
 
@@ -44,7 +48,7 @@ public class SecurityFilter implements GatewayFilter {
         return Optional.empty();
     }
 
-    private boolean validateJwt(String jwt) {
+    private boolean isJwtValid(String jwt) {
         try {
             Jws<Claims> claims = Jwts.parserBuilder()
                     .setSigningKey(credentialsUtil.getKey())

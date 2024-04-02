@@ -1,9 +1,9 @@
 5 issues:
   - lorem
 4 logic:
-  - redis for blacklisted jwts
-3 semantics:
   - lorem
+3 semantics:
+  - integration tests
 2 config:
   - extract security to external microservice
   - create jwt factory (creation, disabling, validating)

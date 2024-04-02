@@ -33,7 +33,6 @@ public class UserService {
                         .claim("email", response.getEmail())
                         .setIssuedAt(new Date())
                         .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day expiration
-                        //todo externalize secret key for jwt
                         .signWith(SignatureAlgorithm.HS256, credentialsUtil.getKey())
                         .compact();
             } else if (responseStatus.equals(HttpStatus.UNAUTHORIZED)) {

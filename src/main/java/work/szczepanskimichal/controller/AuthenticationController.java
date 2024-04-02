@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import work.szczepanskimichal.model.UserLoginDto;
+import work.szczepanskimichal.service.JwtService;
 import work.szczepanskimichal.service.UserService;
 
 @RestController
@@ -13,6 +15,7 @@ import work.szczepanskimichal.service.UserService;
 public class AuthenticationController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
     @PostMapping("/v1/login")
     public ResponseEntity<String> login(@RequestBody UserLoginDto dto) {
@@ -20,9 +23,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/v1/logout")
-    public ResponseEntity<String> logout() {
-        //get jwt from header
-        //blacklist jwt
-        return ResponseEntity.ok("token blacklisted");
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String jwt) {
+        jwtService.blacklistJwt(jwt);
+        return ResponseEntity.ok("successfully logged out");
     }
 }

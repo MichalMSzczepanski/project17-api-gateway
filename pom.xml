@@ -90,6 +90,7 @@
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
+<!--        custom properties source-->
         <dependency>
             <groupId>work.szczepanskimichal</groupId>
             <artifactId>property-library</artifactId>

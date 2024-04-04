@@ -1,18 +1,18 @@
 5 issues:
-  - lorem
+  - no test coverage
 4 logic:
   - lorem
 3 semantics:
-  - integration tests
+  - !!! integration tests
 2 config:
   - extract security to external microservice
   - create jwt factory (creation, disabling, validating)
   - access user-service for credentials confirmation
   - create header with user details to pass on with request
-  - override default security authentication Using generated security password a75ab247-5de5-42b0-a4a0-8d3293bf5557
 1 git:
   - lorem
 
 wishlist:
   - lorem
+  
 

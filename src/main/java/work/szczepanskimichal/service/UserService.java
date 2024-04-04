@@ -30,9 +30,10 @@ public class UserService {
             if (responseStatus.equals(HttpStatus.OK)) {
                 return Jwts.builder()
                         .setSubject(String.valueOf(response.getUserId()))
-                        .claim("email", response.getEmail())
+                        .claim("userEmail", response.getEmail())
+                        .claim("userId", response.getUserId().toString())
                         .setIssuedAt(new Date())
-                        .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day expiration
+                        .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                         .signWith(SignatureAlgorithm.HS256, credentialsUtil.getKey())
                         .compact();
             } else if (responseStatus.equals(HttpStatus.UNAUTHORIZED)) {

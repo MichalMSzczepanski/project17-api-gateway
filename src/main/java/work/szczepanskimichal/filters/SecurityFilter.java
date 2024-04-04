@@ -13,7 +13,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import work.szczepanskimichal.exception.JwtException;
 import work.szczepanskimichal.exception.MissingJwtException;
+import work.szczepanskimichal.model.Headers;
 import work.szczepanskimichal.repository.BlacklistedJwtsRepository;
+import work.szczepanskimichal.service.FilterService;
 import work.szczepanskimichal.util.CredentialsUtil;
 
 import java.util.Date;
@@ -26,6 +28,7 @@ public class SecurityFilter implements GatewayFilter {
 
     private final CredentialsUtil credentialsUtil;
     private final BlacklistedJwtsRepository blacklistedJwtsRepository;
+    private final FilterService filterService;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -36,7 +39,8 @@ public class SecurityFilter implements GatewayFilter {
         if (blacklistedJwtsRepository.existsByJwt(jwt)) {
             throw new JwtException("jwt expired");
         }
-        //todo add header with userdetails to request for further validation if needed2
+        var userId = extractClaimByName(jwt, "userId");
+        exchange = filterService.addHeader(exchange, Headers.X_USER_ID, userId);
         return chain.filter(exchange);
     }
 
@@ -50,10 +54,7 @@ public class SecurityFilter implements GatewayFilter {
 
     private boolean isJwtValid(String jwt) {
         try {
-            Jws<Claims> claims = Jwts.parserBuilder()
-                    .setSigningKey(credentialsUtil.getKey())
-                    .build()
-                    .parseClaimsJws(jwt);
+            Jws<Claims> claims = extractClaims(jwt);
             if (claims.getBody().getExpiration().before(new Date())) {
                 throw new JwtException("expired jwt");
             }
@@ -61,6 +62,23 @@ public class SecurityFilter implements GatewayFilter {
         } catch (Exception e) {
             log.error("error validating jwt: {}", e.getMessage());
             return false;
+        }
+    }
+
+    private Jws<Claims> extractClaims(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(credentialsUtil.getKey())
+                .build()
+                .parseClaimsJws(jwt);
+    }
+
+    private String extractClaimByName(String jwt, String claim) {
+        try {
+            Jws<Claims> claims = extractClaims(jwt);
+            return claims.getBody().get("userId", String.class);
+        } catch (Exception e) {
+            log.error("error validating jwt: {}", e.getMessage());
+            throw new JwtException(String.format("error extractig claim: %s", claim));
         }
     }
 }

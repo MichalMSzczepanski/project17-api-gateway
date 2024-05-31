@@ -5,6 +5,7 @@
 3 semantics:
   1 update security filter to add headers with userId and userEmail to request
 2 config:
+  12 introduce present-service routing
   11 logout and blacklist jwt in mongo
   10 route and filter internal requests
   9 externalize jwt key

@@ -78,7 +78,7 @@ public class SecurityFilter implements GatewayFilter {
             return claims.getBody().get("userId", String.class);
         } catch (Exception e) {
             log.error("error validating jwt: {}", e.getMessage());
-            throw new JwtException(String.format("error extractig claim: %s", claim));
+            throw new JwtException(String.format("error extracting claim: %s", claim));
         }
     }
 }

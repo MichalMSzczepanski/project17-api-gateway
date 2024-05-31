@@ -23,9 +23,14 @@ public class RoutingConfig {
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
+                //present-service routes
+                .route(r -> r.path("/v1/present/**")
+                        .filters(f -> f.filter(securityFilter))
+                        .uri(serviceAddressConfiguration.present))
+                //user-service routes
                 .route(r -> r.path("/v1/public/user/**")
                         .filters(f -> f.filter(publicAccessFilter))
-                        .uri(serviceAddressConfiguration.user)) // Public route
+                        .uri(serviceAddressConfiguration.user))
                 .route(r -> r.path("/v1/user/**")
                         .filters(f -> f.filter(securityFilter))
                         .uri(serviceAddressConfiguration.user))

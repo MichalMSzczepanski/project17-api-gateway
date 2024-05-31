@@ -4,6 +4,7 @@ import feign.FeignException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import work.szczepanskimichal.exception.AuthenticationException;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserServiceFeignClient userServiceFeignClient;
@@ -23,6 +25,7 @@ public class UserService {
 
     public String authenticate(UserLoginDto userLoginDto) {
         try {
+            log.info("Authenticating user: {}", userLoginDto.getEmail());
             var response =
                     userServiceFeignClient.authenticateUser(userLoginDto).orElseThrow(
                             () -> new AuthenticationException("error during user login processing"));
@@ -42,7 +45,7 @@ public class UserService {
                 throw new AuthenticationException(response.getMessage());
             }
         } catch (FeignException e) {
-            throw new AuthenticationException("communication error during authentication");
+            throw new AuthenticationException("communication error during authentication. error details: " + e.getMessage());
         }
         throw new AuthenticationException("system error during authentication");
     }

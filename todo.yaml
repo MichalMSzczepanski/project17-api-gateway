@@ -1,11 +1,19 @@
 5 issues:
-  - no test coverage
+  - lorem
+
 4 logic:
   - lorem
+
 3 semantics:
-  - !!! integration tests
+  - filter tests
+  - routing tests
+  - endpoint integration tests
+  - create static constants for different strings
+
 2 config:
-  - extract security to external microservice
+  - extract security to external microservice:
+      - tbc if this is possible
+      - tbc if all request data will be processed after redirection
   - create jwt factory (creation, disabling, validating)
   - access user-service for credentials confirmation
   - create header with user details to pass on with request

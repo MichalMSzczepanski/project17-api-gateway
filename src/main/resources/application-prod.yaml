@@ -1,6 +1,7 @@
 services:
   address:
     user: "http://user-service:8080"
+    present: "http://present-service:8080"
 
 spring:
   data:

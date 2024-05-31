@@ -12,5 +12,6 @@ import org.springframework.stereotype.Component;
 public class ServiceAddressConfiguration {
 
     public String user;
+    public String present;
 
 }
